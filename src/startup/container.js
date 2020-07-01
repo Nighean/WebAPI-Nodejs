@@ -6,17 +6,28 @@ const config = require ('../config');
 const app = require ('.');
 
 //services
-const {HomeService, ClientService, PolicyService} = require ('../services');
+const {
+  HomeService,
+  ClientService,
+  PolicyService,
+  AuthService,
+} = require ('../services');
 
 //controllers
 const {
   HomeController,
   ClientController,
   PolicyController,
+  AuthController,
 } = require ('../controllers');
 
 //routes
-const {HomeRoutes} = require ('../routes/index.routes');
+const {
+  HomeRoutes,
+  ClientRoutes,
+  PolicyRoutes,
+  AuthRoutes,
+} = require ('../routes/index.routes');
 const Routes = require ('../routes');
 
 const container = createContainer ();
@@ -31,6 +42,7 @@ container
     HomeService: asClass (HomeService).singleton (),
     ClientService: asClass (ClientService).singleton (),
     PolicyService: asClass (PolicyService).singleton (),
+    AuthService: asClass (AuthService).singleton (),
   })
   .register ({
     HomeController: asClass (HomeController.bind (HomeController)).singleton (),
@@ -40,9 +52,13 @@ container
     PolicyController: asClass (
       PolicyController.bind (PolicyController)
     ).singleton (),
+    AuthController: asClass (AuthController.bind (AuthController)).singleton (),
   })
   .register ({
     HomeRoutes: asFunction (HomeRoutes).singleton (),
+    ClientRoutes: asFunction (ClientRoutes).singleton (),
+    PolicyRoutes: asFunction (PolicyRoutes).singleton (),
+    AuthRoutes: asFunction (AuthRoutes).singleton (),
   })
   .register ({
     HttpClient: asValue (axios),
